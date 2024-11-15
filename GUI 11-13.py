@@ -5,16 +5,21 @@ from tkinter import messagebox
 
 top = Tk()
 
+
 top.geometry("500x750") #size of window
 answer = Text(width=35, height=2)
 answer.place(x=100, y=100)
 
+pressedEqual = False
+
 def show(x):
+    global pressedEqual
     try:
         if x == "=":
             final_answer = eval(answer.get(1.0, "end-1c"))
             answer.insert(tk.INSERT, x)
             answer.insert(tk.INSERT, final_answer)
+            pressedEqual = True
         elif x == "AC":
             answer.delete(1.0, END)
         elif x == "TYPE":
@@ -22,6 +27,9 @@ def show(x):
             print(num)
             answer.insert(tk.INSERT, num)
         else:
+            if pressedEqual == True:
+                answer.delete(1.0, END)
+                pressedEqual = False
             answer.insert(tk.INSERT, x)
 
     except:
